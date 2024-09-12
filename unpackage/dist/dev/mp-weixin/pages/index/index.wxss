@@ -1,0 +1,137 @@
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 20rpx;
+  margin-top: 20rpx;
+}
+.square-button1 {
+  width: 300rpx;
+  height: 300rpx;
+  background-color: powderblue;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+.square-button2 {
+  width: 300rpx;
+  height: 300rpx;
+  background-color: lightpink;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+.square-button .icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+.square-button text {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  background-color: #222;
+  border-radius: 10rpx;
+  padding-right: 10rpx;
+  padding-top: 10rpx;
+  padding-bottom: 8rpx;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  /* 每个项目均分宽度 */
+  justify-content: center;
+  /* 居中对齐图标和文字 */
+}
+.icon {
+  width: 20rpx;
+  /* 缩小图标大小 */
+  height: 20rpx;
+  margin-right: 4rpx;
+  /* 缩小图标与文字之间的间隙 */
+}
+.text {
+  font-size: 28rpx;
+  /* 缩小文字大小 */
+  color: white;
+}
+.custom-swiper {
+  width: 740rpx;
+  height: 200px;
+  /* 你想要的统一高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  /* 圆角设置 */
+  overflow: hidden;
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  background-color: #f0f0f0;
+  /* 设置一个背景颜色以更清楚地看到图片 */
+}
+.custom-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 保持图片比例，填充整个容器 */
+  display: block;
+}
+.custom-button {
+  width: 740rpx;
+  height: 100px;
+  /* 自行调整按钮高度 */
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  /* 磨砂质感 */
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+}
+.plus {
+  font-size: 24px;
+  color: #007BFF;
+  /* 自定义颜色 */
+}
