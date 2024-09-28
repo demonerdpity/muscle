@@ -73,6 +73,9 @@ export default {
 	  handleClick() {
 	        // 在这里处理按钮点击事件
 	        console.log("按钮被点击！");
+			uni.navigateTo({
+			        url: '../pictureGeneration/pictureGeneration'
+			      });
 	      },
 	  handleHistoryPictureClick(){
 	  	uni.navigateTo({

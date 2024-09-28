@@ -26,9 +26,13 @@
 
 
 <script>
+import { useCounterStore } from '@/store/store.js'
 	export default {
 	  data() {
+		  const store = useCounterStore();
 	    return {
+			store,
+			historyPlan:[],
 	      // 伪造的历史计划数据
 	      plans: [
       { date: '2024-09-10', summary: '有氧训练', details: '训练计划详情 1：增肌4周，主要集中于力量训练' },
@@ -39,6 +43,25 @@
     ],
 	      selectedPlan: null // 存储当前选中的计划
 	    };
+	  },
+	  onLoad(){
+		  const store = useCounterStore();
+		  const userId = store.id;
+		  uni.request({
+		    url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+		    method: 'GET',
+		    success: (res) => {
+		  	  console.log('获取成功')
+		      if (res.data && res.data.data.count !== undefined) {
+		        this.historyPlan = res.data.data.list;
+				console.log(this.historyPlan)
+		      }
+		    },
+		    fail: () => {
+		  	  console.log('获取失败')
+		      this.historyPlan = []; // 出错时默认为 0
+		    }
+		  });
 	  },
 	  methods: {
 	    handleIconClick() {

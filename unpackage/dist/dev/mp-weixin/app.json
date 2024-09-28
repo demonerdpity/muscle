@@ -1,12 +1,17 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/owner/owner",
     "pages/space/space",
     "pages/search/search",
     "pages/historyPlan/historyPlan",
     "pages/myTarget/myTarget",
-    "pages/historyPicture/historyPicture"
+    "pages/historyPicture/historyPicture",
+    "pages/pictureGeneration/pictureGeneration",
+    "pages/find/find",
+    "pages/register/register",
+    "pages/addInfo/addInfo"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -21,12 +26,6 @@
         "text": "首页",
         "iconPath": "static/icon/home1.png",
         "selectedIconPath": "static/icon/home2.png"
-      },
-      {
-        "pagePath": "pages/space/space",
-        "text": "论坛",
-        "iconPath": "static/icon/space1.png",
-        "selectedIconPath": "static/icon/space2.png"
       },
       {
         "pagePath": "pages/search/search",

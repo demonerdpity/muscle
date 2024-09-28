@@ -1,8 +1,12 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const store_store = require("../../store/store.js");
 const _sfc_main = {
   data() {
+    const store = store_store.useCounterStore();
     return {
+      store,
+      historyPlan: [],
       // 伪造的历史计划数据
       plans: [
         { date: "2024-09-10", summary: "有氧训练", details: "训练计划详情 1：增肌4周，主要集中于力量训练" },
@@ -14,6 +18,25 @@ const _sfc_main = {
       selectedPlan: null
       // 存储当前选中的计划
     };
+  },
+  onLoad() {
+    const store = store_store.useCounterStore();
+    const userId = store.id;
+    common_vendor.index.request({
+      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+      method: "GET",
+      success: (res) => {
+        console.log("获取成功");
+        if (res.data && res.data.data.count !== void 0) {
+          this.historyPlan = res.data.data.list;
+          console.log(this.historyPlan);
+        }
+      },
+      fail: () => {
+        console.log("获取失败");
+        this.historyPlan = [];
+      }
+    });
   },
   methods: {
     handleIconClick() {

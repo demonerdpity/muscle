@@ -37,17 +37,36 @@
 </template>
 
 <script>
+import { useCounterStore } from '../../store/store';
 export default {
   data() {
+	  const store = useCounterStore();
     return {
       images: [
               'https://img.zcool.cn/community/0168c359730129a8012193a31496a8.JPG@2o.jpg',
               'https://th.bing.com/th/id/OIP.ezc5rRMP_ZWVRzqnkeXmaAHaE9?rs=1&pid=ImgDetMain',
               'https://th.bing.com/th/id/OIP.eGVrg6NWGCMEGt61WiGngQHaE0?rs=1&pid=ImgDetMain'
-            ]  
+            ] ,
+	  historyPicture:[],
     };
   },
-  onLoad() {},
+  onLoad() {
+	  const store = useCounterStore();
+	  const userId = store.id;
+	  uni.request({
+	    url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+	    method: 'GET',
+	    success: (res) => {
+	      if (res.data && res.data.data.count !== undefined) {
+	        this.historyPicture = res.data.data.list;
+			console.log(this.historyPicture)
+	      }
+	    },
+	    fail: () => {
+	      this.historyPicture = []; // 出错时默认为 0
+	    }
+	  });
+  },
   methods: {
 	  handleClick() {
 	        // 在这里处理按钮点击事件

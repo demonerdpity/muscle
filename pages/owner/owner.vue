@@ -13,7 +13,7 @@
 						<view class="center_info">
 							<view class="center_name">
 								<!-- 这里可以放自己的名称图片 -->
-								<view>张三</view>
+								<view @click="login">{{store.username}}</view>
 							</view>
 							<view class="center_vip">
 								<image class="rank_icon" src="../../static/icon/vip.png" />
@@ -29,20 +29,24 @@
 
 		<!-- 统计 -->
 		<view class="count">
-			<view class="cell" @click="handleHistoryPlanClick">{{historyPlan}}<text>历史计划</text></view>
-			<view class="cell" @click="handleHistoryPictureClick">{{historyPicture}}<text>历史图片</text></view>
-			<view class="cell" @click="handleHistoryTargetClick">5<text>我的目标</text></view>
-			<view class="cell">{{history}}<text>我的足迹</text></view>
+			<view class="cell" @click="handleHistoryPlanClick">1<text>历史计划</text></view>
+			<view class="cell" @click="handleHistoryPictureClick">1<text>历史图片</text></view>
+			<view class="cell" @click="handleHistoryTargetClick">1<text>我的目标</text></view>
+			<view class="cell" @click="handleAddInfo">0<text>添加信息</text></view>
 		</view>
 		<!-- 其它 -->
-		<button style="background: #333;position: absolute;bottom: 26.5%;color: skyblue;width: 100%;border-radius: 0%;">问题反馈</button>
-		<button style="background: #333;position: absolute;bottom: 20%;color: red;width: 100%;border-radius: 0%;">退出登录</button>
+<!-- 		<button style="background: #333;position: absolute;bottom: 26.5%;color: skyblue;width: 100%;border-radius: 0%;">问题反馈</button -->>
+		<button style="background: #333;position: absolute;bottom: 20%;color: red;width: 100%;border-radius: 0%;" @click="logout">退出登录</button>
 	</view>
 </template>
+
+
 
 <script>
 import uniList from '@dcloudio/uni-ui/lib/uni-list/uni-list.vue';
 import uniListItem from '@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue';
+import { useCounterStore } from '@/store/store.js'
+
 
 export default {
 	components: {
@@ -50,16 +54,20 @@ export default {
 		uniListItem,
 	},
 	data(){
+		const store = useCounterStore();
 		return{
+			store,
 			historyPlan: 0,
 			historyPicture: 0,
 			history: 0
 		}
 	},
 	onLoad() {
+	const store = useCounterStore();
+	const userId = store.id;
     // 请求 historyPlan 接口
     uni.request({
-      url: 'https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/1',
+      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
       method: 'GET',
       success: (res) => {
 		  console.log('获取成功')
@@ -75,7 +83,7 @@ export default {
 
     // 请求 historyPicture 接口
     uni.request({
-      url: 'https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/1',
+      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
       method: 'GET',
       success: (res) => {
         if (res.data && res.data.data.count !== undefined) {
@@ -89,7 +97,7 @@ export default {
 
     // 请求 history 接口，这个接口访问是空
     uni.request({
-      url: 'https://apifoxmock.com/m1/5119278-4782393-default/user/history/1',
+      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/history/${userId}`,
       method: 'GET',
       success: (res) => {
         if (res.data && res.data.data.count !== undefined) {
@@ -117,6 +125,21 @@ export default {
 	handleHistoryPictureClick(){
 		uni.navigateTo({
 		        url: '../historyPicture/historyPicture'
+		      });
+	},
+	handleAddInfo(){
+		uni.navigateTo({
+		        url: '../addInfo/addInfo'
+		      });
+	},
+	login(){
+		uni.navigateTo({
+		        url: '../login/login'
+		      });
+	},
+	logout(){
+		uni.navigateTo({
+		        url: '../login/login'
 		      });
 	}
 }

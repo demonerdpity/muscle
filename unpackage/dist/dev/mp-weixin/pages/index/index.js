@@ -12,6 +12,9 @@ const _sfc_main = {
   methods: {
     handleClick() {
       console.log("按钮被点击！");
+      common_vendor.index.navigateTo({
+        url: "../pictureGeneration/pictureGeneration"
+      });
     },
     handleHistoryPictureClick() {
       common_vendor.index.navigateTo({

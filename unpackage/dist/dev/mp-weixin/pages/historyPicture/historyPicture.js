@@ -1,17 +1,35 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const store_store = require("../../store/store.js");
 const common_assets = require("../../common/assets.js");
 const _sfc_main = {
   data() {
+    store_store.useCounterStore();
     return {
       images: [
         "https://img.zcool.cn/community/0168c359730129a8012193a31496a8.JPG@2o.jpg",
         "https://th.bing.com/th/id/OIP.ezc5rRMP_ZWVRzqnkeXmaAHaE9?rs=1&pid=ImgDetMain",
         "https://th.bing.com/th/id/OIP.eGVrg6NWGCMEGt61WiGngQHaE0?rs=1&pid=ImgDetMain"
-      ]
+      ],
+      historyPicture: []
     };
   },
   onLoad() {
+    const store = store_store.useCounterStore();
+    const userId = store.id;
+    common_vendor.index.request({
+      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+      method: "GET",
+      success: (res) => {
+        if (res.data && res.data.data.count !== void 0) {
+          this.historyPicture = res.data.data.list;
+          console.log(this.historyPicture);
+        }
+      },
+      fail: () => {
+        this.historyPicture = [];
+      }
+    });
   },
   methods: {
     handleClick() {

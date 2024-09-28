@@ -5,4 +5,8 @@ page{
 		height: 100%;
 		background-color: #222;
 }
+uni-action-sheet {
+	  background-color: #333; /* 暗色背景 */
+	  color: #fff; /* 白色字体 */
+}
 page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[data-c-h="true"]{display: none !important;}

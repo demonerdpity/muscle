@@ -1,40 +1,55 @@
 <template>
-	<view style="background-color: #333;">
+	<view style="background-color: #333; height: 100%;">
 	<view class="icon-button" @click="handleIconClick">
 	      <image src="../../static/icon/history.png" class="icon-image"></image>
 	</view>
   <view class="wrapper">
+	<view class="answer-container"v-if="showAnswer">
+		<text class="answer-text" selectable="true">hfjdksajfhsalhfjdsklahfljksafhsjaklfhdskaljfdpsoFOPWEUhkjdlhfkajlhfdklsafh</text>
+	</view>
     <view class="form-container">
-      <view class="form-item">
-        <text>身高 (cm):</text>
-        <input :value="height" @input="updateHeight" type="number" placeholder="请输入身高" />
-      </view>
-      <view class="form-item">
-        <text>体重 (kg):</text>
-        <input :value="weight" @input="updateWeight" type="number" placeholder="请输入体重" />
-      </view>
-	  <view class="form-item">
-	    <text>期望体重 (kg):</text>
-	    <input :value="targetWeight" @input="updateTargetWeight" type="number" placeholder="请输入期望体重" />
-	  </view>
-      <view class="form-item">
-        <text>性别:</text>
-        <picker mode="selector" :range="genderOptions" :value="genderIndex" @change="onGenderChange">
-          <view class="picker">{{ genderOptions[genderIndex] }}</view>
-        </picker>
-      </view>
-      <view class="form-item">
-        <text>目的:</text>
-        <picker mode="selector" :range="goalOptions" :value="goalIndex" @change="onGoalChange">
-          <view class="picker">{{ goalOptions[goalIndex] }}</view>
-        </picker>
-      </view>
-      <view class="form-item">
-        <text>训练时长 (周):</text>
-        <picker mode="selector" :range="durationOptions" :value="durationIndex" @change="onDurationChange">
-          <view class="picker">{{ durationOptions[durationIndex] }}</view>
-        </picker>
-      </view>
+      <view class="form-row">
+                <view class="form-item">
+                  <text>身高 (cm):</text>
+                  <picker mode="selector" :range="heightOptions" :value="heightIndex" @change="onHeightChange">
+                    <view class="picker">{{ heightOptions[heightIndex] }}</view>
+                  </picker>
+                </view>
+                <view class="form-item">
+                  <text>体重 (kg):</text>
+                  <picker mode="selector" :range="weightOptions" :value="weightIndex" @change="onWeightChange">
+                    <view class="picker">{{ weightOptions[weightIndex] }}</view>
+                  </picker>
+                </view>
+              </view>
+      
+              <view class="form-row">
+                <view class="form-item">
+                  <text>期望体重 (kg):</text>
+                  <picker mode="selector" :range="targetWeightOptions" :value="targetWeightIndex" @change="onTargetWeightChange">
+                    <view class="picker">{{ targetWeightOptions[targetWeightIndex] }}</view>
+                  </picker>
+                </view>
+                <view class="form-item">
+                  <text>性别:</text>
+                  <picker mode="selector" :range="genderOptions" :value="genderIndex" @change="onGenderChange">
+                    <view class="picker">{{ genderOptions[genderIndex] }}</view>
+                  </picker>
+                </view>
+              </view>
+      
+                <view class="form-item">
+                  <text>目的:</text>
+                  <picker mode="selector" :range="goalOptions" :value="goalIndex" @change="onGoalChange">
+                    <view class="picker">{{ goalOptions[goalIndex] }}</view>
+                  </picker>
+                </view>
+                <view class="form-item">
+                  <text>训练时长 (周):</text>
+                  <picker mode="selector" :range="durationOptions" :value="durationIndex" @change="onDurationChange">
+                    <view class="picker">{{ durationOptions[durationIndex] }}</view>
+                  </picker>
+                </view>
 
       <button class="search-button" @click="search">生成计划</button>
     </view>
@@ -46,15 +61,22 @@
 export default {
   data() {
     return {
-      height: '',
-      weight: '',
-      genderIndex: 0,
-      goalIndex: 0,
-      durationIndex: 0,
-      targetWeight: '',
-      genderOptions: ['男', '女'],
-      goalOptions: ['减脂', '增肌'],
-      durationOptions: ['4', '8', '12', '16', '20']
+       heightOptions: Array.from({ length: 56 }, (v, k) => 145 + k), // 生成145到200的选项
+          weightOptions: Array.from({ length: 96 }, (v, k) => 35 + k),  // 生成35到130的选项
+		  targetWeightOptions: Array.from({ length: 96 }, (v, k) => 35 + k), // 生成35到130的选项
+          heightIndex: 0,
+          weightIndex: 0,
+		  targetWeightIndex: 0,
+          height: '',
+          weight: '',
+          targetWeight: '',
+          genderIndex: 0,
+          goalIndex: 0,
+          durationIndex: 0,
+          genderOptions: ['男', '女'],
+          goalOptions: ['减脂', '增肌'],
+          durationOptions: ['4', '8', '12', '16', '20'],
+		  showAnswer: false,
     };
   },
   methods: {
@@ -69,6 +91,18 @@ export default {
     updateWeight(event) {
       this.weight = event.detail.value;
     },
+	onTargetWeightChange(event) {
+	    this.targetWeightIndex = event.detail.value;
+	    this.targetWeight = this.targetWeightOptions[this.targetWeightIndex];
+	  },
+	onHeightChange(event) {
+	    this.heightIndex = event.detail.value;
+	    this.height = this.heightOptions[this.heightIndex];
+	  },
+	  onWeightChange(event) {
+	    this.weightIndex = event.detail.value;
+	    this.weight = this.weightOptions[this.weightIndex];
+	  },
     onGenderChange(event) {
       this.genderIndex = event.detail.value;
     },
@@ -83,6 +117,7 @@ export default {
     },
 	
     search() {
+		this.showAnswer = true
       // 记录或处理用户输入的值
       const searchData = {
         height: this.height,
@@ -120,6 +155,7 @@ export default {
 
 <style scoped>
 	
+	
 	.icon-button {
 	  position: absolute;
 	  top: 40rpx; /* 距离顶部10rpx */
@@ -144,28 +180,57 @@ export default {
   box-sizing: border-box;
 }
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #333;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 使内容在上下方向留有空间 */
+    align-items: center;
+    height: auto; /* 设置高度，减去顶部按钮和tarBar的高度 */
+    padding-top: 100rpx; /* 距离顶部按钮的空间 */
+    padding-bottom: 80rpx; /* 距离底部tarBar的空间 */
+    background-color: #333;
+	color: #fff;
+  }
 
 .form-container {
   width: 300px;
-  padding: 20px;
-  background-color: #ccc;
+  padding: 10px;
+  background-color: #111;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Use absolute positioning */
+  bottom: 250rpx; /* Position 100rpx from the bottom */
+}
+
+ .answer-container {
+     width: 300px;
+     padding: 10px;
+     background-color: #222;
+     border-radius: 8px;
+     margin-bottom: 20px;
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+     max-height: 300px; /* 设置一个最大高度，避免过高 */
+	 overflow-y: auto;
+   }
+
+  .answer-text {
+  width: 100%; /* 让文本宽度填满容器 */
+  white-space: normal; /* 确保文本不会在一行内显示，避免左右滚动 */
+  word-wrap: break-word; /* 如果有长单词，会自动换行 */
+  color: white;
+}
+.form-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 .form-item {
-  margin-bottom: 20px;
+  flex: 1;
+  margin: 0 10px 20px;
 }
 
 .picker {
   padding: 10px;
-  background-color: #eee;
+  background-color: #222;
   border-radius: 4px;
 }
 
