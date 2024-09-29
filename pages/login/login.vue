@@ -45,7 +45,7 @@ export default {
       console.log('登录尝试', this.username, this.password)
       
 	  uni.request({
-	    url: 'https://apifoxmock.com/m1/5119278-4782393-default/api/login',  
+	    url: 'https://127.0.0.1:5000/api/login',  
 	    method: 'POST',
 	    data: {
 	      user_name: this.username,  

@@ -54,7 +54,7 @@ export default {
 	  const store = useCounterStore();
 	  const userId = store.id;
 	  uni.request({
-	    url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+	    url: `https://127.0.0.1:5000/user/historyPicture/${userId}`,
 	    method: 'GET',
 	    success: (res) => {
 	      if (res.data && res.data.data.count !== undefined) {

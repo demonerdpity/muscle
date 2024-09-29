@@ -134,7 +134,7 @@ export default {
     
       // 通过接口发送该请求
       uni.request({
-        url: 'https://apifoxmock.com/m1/5119278-4782393-default/api/aiPlan',  
+        url: 'https://127.0.0.1:5000/api/aiPlan',  
         method: 'POST',
         data: {
           text: formattedText  // 发送格式化后的文本

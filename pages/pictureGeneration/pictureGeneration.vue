@@ -56,7 +56,7 @@ export default {
 	      async uploadImage() {
 	        try {
 	          const uploadTask = await uni.uploadFile({
-	            url: 'https://apifoxmock.com/m1/5119278-4782393-default/api/upload', 
+	            url: 'https://127.0.0.1:5000/api/upload', 
 	            filePath: this.filePath,
 	            name: 'file'
 	          });
@@ -72,7 +72,7 @@ export default {
 		  async generate() {
 			  this.generateText = '正在生成中...';
 			  uni.request({
-			  	url: 'https://apifoxmock.com/m1/5119278-4782393-default/api/aiPS',
+			  	url: 'https://127.0.0.1:5000/api/aiPS',
 				method: 'POST',
 				data:{
 					url: this.filePath,

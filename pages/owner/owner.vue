@@ -67,7 +67,7 @@ export default {
 	const userId = store.id;
     // 请求 historyPlan 接口
     uni.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPlan/${userId}`,
       method: 'GET',
       success: (res) => {
 		  console.log('获取成功')
@@ -83,7 +83,7 @@ export default {
 
     // 请求 historyPicture 接口
     uni.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPicture/${userId}`,
       method: 'GET',
       success: (res) => {
         if (res.data && res.data.data.count !== undefined) {
@@ -97,7 +97,7 @@ export default {
 
     // 请求 history 接口，这个接口访问是空
     uni.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/history/${userId}`,
+      url: `https://127.0.0.1:5000/user/history/${userId}`,
       method: 'GET',
       success: (res) => {
         if (res.data && res.data.data.count !== undefined) {

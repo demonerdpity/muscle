@@ -48,7 +48,7 @@ import { useCounterStore } from '@/store/store.js'
 		  const store = useCounterStore();
 		  const userId = store.id;
 		  uni.request({
-		    url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+		    url: `https://127.0.0.1:5000/user/historyPlan/${userId}`,
 		    method: 'GET',
 		    success: (res) => {
 		  	  console.log('获取成功')
