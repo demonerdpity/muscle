@@ -18,7 +18,7 @@ const _sfc_main = {
     const store = store_store.useCounterStore();
     const userId = store.id;
     common_vendor.index.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPicture/${userId}`,
       method: "GET",
       success: (res) => {
         if (res.data && res.data.data.count !== void 0) {
@@ -42,8 +42,52 @@ const _sfc_main = {
       });
       console.log("展示图片");
     },
+    saveImage() {
+      common_vendor.index.downloadFile({
+        url: this.currentImage,
+        // 通过 this.currentImage 获取点击图片的 URL
+        success: (downloadResult) => {
+          if (downloadResult.statusCode === 200) {
+            common_vendor.index.saveImageToPhotosAlbum({
+              filePath: downloadResult.tempFilePath,
+              // 下载图片的临时文件路径
+              success: () => {
+                common_vendor.index.showToast({
+                  title: "图片保存成功",
+                  icon: "success",
+                  duration: 2e3
+                });
+              },
+              fail: (err) => {
+                console.log("保存失败", err);
+                common_vendor.index.showToast({
+                  title: "保存失败",
+                  icon: "none",
+                  duration: 2e3
+                });
+              }
+            });
+          } else {
+            common_vendor.index.showToast({
+              title: "图片下载失败",
+              icon: "none",
+              duration: 2e3
+            });
+          }
+        },
+        fail: (err) => {
+          console.log("下载失败", err);
+          common_vendor.index.showToast({
+            title: "图片下载失败",
+            icon: "none",
+            duration: 2e3
+          });
+        }
+      });
+    },
     showActionSheet(index) {
       this.currentImage = this.images[index];
+      console.log(this.currentImage);
       common_vendor.index.showActionSheet({
         itemList: ["保存图片"],
         success: (res) => {

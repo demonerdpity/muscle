@@ -15,14 +15,19 @@ const _sfc_main = {
       store,
       historyPlan: 0,
       historyPicture: 0,
-      history: 0
+      history: 0,
+      icons: ["../../static/head/head1.jpg", "../../static/head/head2.jpg", "../../static/head/head3.jpg", "../../static/head/head4.jpg", "../../static/head/head5.jpg", "../../static/head/head6.jpg", "../../static/head/head7.jpg", "../../static/head/head8.jpg", "../../static/head/head9.jpg"],
+      selectedIcon: "../../static/head/head1.jpg",
+      currentIcon: 0,
+      showPopup: false
     };
   },
   onLoad() {
     const store = store_store.useCounterStore();
     const userId = store.id;
+    this.selectedIcon = this.icons[this.store.headImg];
     common_vendor.index.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPlan/${userId}`,
       method: "GET",
       success: (res) => {
         console.log("获取成功");
@@ -36,7 +41,7 @@ const _sfc_main = {
       }
     });
     common_vendor.index.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPicture/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPicture/${userId}`,
       method: "GET",
       success: (res) => {
         if (res.data && res.data.data.count !== void 0) {
@@ -48,7 +53,7 @@ const _sfc_main = {
       }
     });
     common_vendor.index.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/history/${userId}`,
+      url: `https://127.0.0.1:5000/user/history/${userId}`,
       method: "GET",
       success: (res) => {
         if (res.data && res.data.data.count !== void 0) {
@@ -92,21 +97,38 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "../login/login"
       });
+    },
+    changeIcon() {
+      console.log("头像被点击");
+      this.showPopup = true;
+    },
+    switchIcon() {
+      this.currentIcon = (this.currentIcon + 1) % this.icons.length;
+    },
+    confirmIcon() {
+      this.selectedIcon = this.icons[this.currentIcon];
+      this.store.headImg = this.currentIcon;
+      this.showPopup = false;
     }
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_assets._imports_0,
-    b: common_vendor.t($data.store.username),
-    c: common_vendor.o((...args) => $options.login && $options.login(...args)),
-    d: common_assets._imports_1$1,
-    e: common_vendor.o((...args) => $options.handleHistoryPlanClick && $options.handleHistoryPlanClick(...args)),
-    f: common_vendor.o((...args) => $options.handleHistoryPictureClick && $options.handleHistoryPictureClick(...args)),
-    g: common_vendor.o((...args) => $options.handleHistoryTargetClick && $options.handleHistoryTargetClick(...args)),
-    h: common_vendor.o((...args) => $options.handleAddInfo && $options.handleAddInfo(...args)),
-    i: common_vendor.o((...args) => $options.logout && $options.logout(...args))
-  };
+  return common_vendor.e({
+    a: $data.selectedIcon,
+    b: common_vendor.o((...args) => $options.changeIcon && $options.changeIcon(...args)),
+    c: common_vendor.t($data.store.username),
+    d: common_vendor.o((...args) => $options.login && $options.login(...args)),
+    e: common_assets._imports_0$1,
+    f: $data.showPopup
+  }, $data.showPopup ? {
+    g: $data.icons[$data.currentIcon],
+    h: common_vendor.o((...args) => $options.switchIcon && $options.switchIcon(...args)),
+    i: common_vendor.o((...args) => $options.confirmIcon && $options.confirmIcon(...args))
+  } : {}, {
+    j: common_vendor.o((...args) => $options.handleHistoryPlanClick && $options.handleHistoryPlanClick(...args)),
+    k: common_vendor.o((...args) => $options.handleHistoryPictureClick && $options.handleHistoryPictureClick(...args)),
+    l: common_vendor.o((...args) => $options.logout && $options.logout(...args))
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-44720e65"]]);
 wx.createPage(MiniProgramPage);

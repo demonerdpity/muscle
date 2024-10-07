@@ -23,6 +23,57 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.popup_buttons button.data-v-44720e65 {
+  padding: 5px 15px;
+  /* 减少按钮的内边距 */
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 14px;
+  /* 缩小文字大小 */
+}
+.popup.data-v-44720e65 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* 半透明黑色背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup_content.data-v-44720e65 {
+  background-color: #111;
+  border-radius: 10px;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+.popup_avatar.data-v-44720e65 {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar_image.data-v-44720e65 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.popup_buttons.data-v-44720e65 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+.popup_buttons button.data-v-44720e65 {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+}
 .custom-list-item.data-v-44720e65 {
   background-color: #1f1f1f;
   color: #cccccc;

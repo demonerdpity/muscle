@@ -25,6 +25,12 @@ const _sfc_main = {
       showAnswer: false
     };
   },
+  onShow() {
+    this.heightOptions = Array.from({ length: 56 }, (v, k) => 145 + k), // 生成145到200的选项
+    this.weightOptions = Array.from({ length: 96 }, (v, k) => 35 + k), // 生成35到130的选项
+    this.targetWeightOptions = Array.from({ length: 96 }, (v, k) => 35 + k), // 生成35到130的选项
+    this.heightIndex = 0, this.weightIndex = 0, this.targetWeightIndex = 0, this.height = "", this.weight = "", this.targetWeight = "", this.genderIndex = 0, this.goalIndex = 0, this.durationIndex = 0, this.genderOptions = ["男", "女"], this.goalOptions = ["减脂", "增肌"], this.durationOptions = ["4", "8", "12", "16", "20"], this.showAnswer = false;
+  },
   methods: {
     handleIconClick(e) {
       common_vendor.index.navigateTo({
@@ -73,7 +79,7 @@ const _sfc_main = {
       });
       const formattedText = `我要进行增肌，帮我合理安排一周的健身计划`;
       common_vendor.index.request({
-        url: "https://apifoxmock.com/m1/5119278-4782393-default/api/aiPlan",
+        url: "https://127.0.0.1:5000/api/aiPlan",
         method: "POST",
         data: {
           text: formattedText
@@ -91,7 +97,7 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_assets._imports_0$1,
+    a: common_assets._imports_0$2,
     b: common_vendor.o((...args) => $options.handleIconClick && $options.handleIconClick(...args)),
     c: $data.showAnswer
   }, $data.showAnswer ? {} : {}, {

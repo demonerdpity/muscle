@@ -13,7 +13,7 @@ const _sfc_main = {
     register() {
       console.log("注册尝试", this.username, this.password);
       common_vendor.index.request({
-        url: "https://apifoxmock.com/m1/5119278-4782393-default/api/register",
+        url: "https://127.0.0.1:5000/api/register",
         method: "POST",
         data: {
           user_name: this.username,

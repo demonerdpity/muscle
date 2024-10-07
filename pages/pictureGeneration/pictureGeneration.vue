@@ -81,6 +81,7 @@ export default {
 				success: (res) => {
 						 console.log('success') 
 						 //赋值
+						 // this.generatedImg = 
 				},
 				fail: () => {
 						  console.log('fail')
@@ -102,6 +103,46 @@ export default {
 		          }
 		        });
 		      },
+			   saveImage() {
+			        if (this.generatedImg) {
+			          uni.downloadFile({
+			            url: this.generatedImg, // 下载生成的图片
+			            success: (downloadRes) => {
+			              if (downloadRes.statusCode === 200) {
+			                uni.saveImageToPhotosAlbum({
+			                  filePath: downloadRes.tempFilePath, // 保存到相册
+			                  success: () => {
+			                    uni.showToast({
+			                      title: '保存成功',
+			                      icon: 'success'
+			                    });
+			                  },
+			                  fail: (err) => {
+			                    console.error('保存图片失败', err);
+			                    uni.showToast({
+			                      title: '保存失败',
+			                      icon: 'none'
+			                    });
+			                  }
+			                });
+			              }
+			            },
+			            fail: (err) => {
+			              console.error('下载图片失败', err);
+			              uni.showToast({
+			                title: '下载失败',
+			                icon: 'none'
+			              });
+			            }
+			          });
+			        } else {
+			          uni.showToast({
+			            title: '没有可保存的图片',
+			            icon: 'none'
+			          });
+			        }
+			      }
+			    
 	    }
   
 };

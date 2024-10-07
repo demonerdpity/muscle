@@ -16,6 +16,9 @@ const _sfc_main = {
   methods: {
     login() {
       console.log("登录尝试", this.username, this.password);
+      common_vendor.index.switchTab({
+        url: "../index/index"
+      });
       common_vendor.index.request({
         url: "https://apifoxmock.com/m1/5119278-4782393-default/api/login",
         method: "POST",

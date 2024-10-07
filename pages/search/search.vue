@@ -79,6 +79,25 @@ export default {
 		  showAnswer: false,
     };
   },
+  onShow() {
+      // 每次页面重新显示时重置文字状态
+      this.heightOptions = Array.from({ length: 56 }, (v, k) => 145 + k), // 生成145到200的选项
+         this.weightOptions= Array.from({ length: 96 }, (v, k) => 35 + k),  // 生成35到130的选项
+		  this.targetWeightOptions= Array.from({ length: 96 }, (v, k) => 35 + k), // 生成35到130的选项
+         this.heightIndex = 0,
+         this.weightIndex= 0,
+		  this.targetWeightIndex = 0,
+         this.height = '',
+         this.weight = '',
+         this.targetWeight = '',
+         this.genderIndex = 0,
+         this.goalIndex = 0,
+         this.durationIndex = 0,
+         this.genderOptions = ['男', '女'],
+         this.goalOptions = ['减脂', '增肌'],
+         this.durationOptions = ['4', '8', '12', '16', '20'],
+		  this.showAnswer = false
+    },
   methods: {
     handleIconClick(e){
 		uni.navigateTo({

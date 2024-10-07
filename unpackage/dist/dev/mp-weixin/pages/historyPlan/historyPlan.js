@@ -23,7 +23,7 @@ const _sfc_main = {
     const store = store_store.useCounterStore();
     const userId = store.id;
     common_vendor.index.request({
-      url: `https://apifoxmock.com/m1/5119278-4782393-default/user/historyPlan/${userId}`,
+      url: `https://127.0.0.1:5000/user/historyPlan/${userId}`,
       method: "GET",
       success: (res) => {
         console.log("获取成功");

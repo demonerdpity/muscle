@@ -79,21 +79,67 @@ export default {
 	        });
 			console.log('展示图片')
 	      },
-		  showActionSheet(index) {
-		        this.currentImage = this.images[index];
-		        // 显示底部弹出的操作菜单
-		        uni.showActionSheet({
-		          itemList: ['保存图片'],
-		          success: (res) => {
-		            if (res.tapIndex === 0) {
-		              this.saveImage();
-		            }
-		          },
-		          fail: () => {
-		            console.log('操作取消');
+		  saveImage() {
+		      // 下载图片
+		      uni.downloadFile({
+		        url: this.currentImage, // 通过 this.currentImage 获取点击图片的 URL
+		        success: (downloadResult) => {
+		          if (downloadResult.statusCode === 200) {
+		            // 成功下载图片后，保存到相册
+		            uni.saveImageToPhotosAlbum({
+		              filePath: downloadResult.tempFilePath, // 下载图片的临时文件路径
+		              success: () => {
+		                uni.showToast({
+		                  title: '图片保存成功',
+		                  icon: 'success',
+		                  duration: 2000
+		                });
+		              },
+		              fail: (err) => {
+		                console.log('保存失败', err);
+		                uni.showToast({
+		                  title: '保存失败',
+		                  icon: 'none',
+		                  duration: 2000
+		                });
+		              }
+		            });
+		          } else {
+		            // 下载失败时的处理
+		            uni.showToast({
+		              title: '图片下载失败',
+		              icon: 'none',
+		              duration: 2000
+		            });
 		          }
-		        });
-		      },
+		        },
+		        fail: (err) => {
+		          // 下载失败时的处理
+		          console.log('下载失败', err);
+		          uni.showToast({
+		            title: '图片下载失败',
+		            icon: 'none',
+		            duration: 2000
+		          });
+		        }
+		      });
+		    },
+		    showActionSheet(index) {
+		      this.currentImage = this.images[index]; // 将当前图片的 URL 赋值给 currentImage
+			  console.log(this.currentImage)
+		      // 显示底部弹出的操作菜单
+		      uni.showActionSheet({
+		        itemList: ['保存图片'],
+		        success: (res) => {
+		          if (res.tapIndex === 0) {
+		            this.saveImage(); // 用户点击保存图片时，调用 saveImage 方法
+		          }
+		        },
+		        fail: () => {
+		          console.log('操作取消');
+		        }
+		      });
+		    }
   },
 };
 </script>

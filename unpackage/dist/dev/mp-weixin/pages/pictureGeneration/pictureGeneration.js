@@ -31,7 +31,7 @@ const _sfc_main = {
     async uploadImage() {
       try {
         const uploadTask = await common_vendor.index.uploadFile({
-          url: "https://apifoxmock.com/m1/5119278-4782393-default/api/upload",
+          url: "https://127.0.0.1:5000/api/upload",
           filePath: this.filePath,
           name: "file"
         });
@@ -46,7 +46,7 @@ const _sfc_main = {
     async generate() {
       this.generateText = "正在生成中...";
       common_vendor.index.request({
-        url: "https://apifoxmock.com/m1/5119278-4782393-default/api/aiPS",
+        url: "https://127.0.0.1:5000/api/aiPS",
         method: "POST",
         data: {
           url: this.filePath,
@@ -72,6 +72,47 @@ const _sfc_main = {
           console.log("操作取消");
         }
       });
+    },
+    saveImage() {
+      if (this.generatedImg) {
+        common_vendor.index.downloadFile({
+          url: this.generatedImg,
+          // 下载生成的图片
+          success: (downloadRes) => {
+            if (downloadRes.statusCode === 200) {
+              common_vendor.index.saveImageToPhotosAlbum({
+                filePath: downloadRes.tempFilePath,
+                // 保存到相册
+                success: () => {
+                  common_vendor.index.showToast({
+                    title: "保存成功",
+                    icon: "success"
+                  });
+                },
+                fail: (err) => {
+                  console.error("保存图片失败", err);
+                  common_vendor.index.showToast({
+                    title: "保存失败",
+                    icon: "none"
+                  });
+                }
+              });
+            }
+          },
+          fail: (err) => {
+            console.error("下载图片失败", err);
+            common_vendor.index.showToast({
+              title: "下载失败",
+              icon: "none"
+            });
+          }
+        });
+      } else {
+        common_vendor.index.showToast({
+          title: "没有可保存的图片",
+          icon: "none"
+        });
+      }
     }
   }
 };
@@ -82,7 +123,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: $data.imageSrc
   } : {}, {
     c: common_vendor.o((...args) => $options.chooseImage && $options.chooseImage(...args)),
-    d: common_assets._imports_0$2,
+    d: common_assets._imports_0$3,
     e: $data.generatedImg
   }, $data.generatedImg ? {
     f: $data.generatedImg

@@ -5,9 +5,9 @@
 			<view class="top">
 				<view class="center">
 					<view class="center_top">
-						<view class="center_img">
+						<view class="center_img" @click="changeIcon">
 							<!-- 这里可以放自己的静态头像 -->
-							<image src="../../static/pic/swiper3.jpg"></image>
+							<image :src=selectedIcon></image>
 							<open-data type="userAvatarUrl" class="user_head"></open-data>
 						</view>
 						<view class="center_info">
@@ -26,13 +26,24 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- 弹窗 -->
+		    <view v-if="showPopup" class="popup">
+		      <view class="popup_content">
+		        <view class="popup_avatar">
+		          <image :src="icons[currentIcon]" class="avatar_image"></image>
+		        </view>
+		        <view class="popup_buttons">
+		          <button @click="switchIcon">下一张头像</button>
+		          <button @click="confirmIcon">确认</button>
+		        </view>
+		      </view>
+		    </view>
 
 		<!-- 统计 -->
 		<view class="count">
 			<view class="cell" @click="handleHistoryPlanClick">1<text>历史计划</text></view>
 			<view class="cell" @click="handleHistoryPictureClick">1<text>历史图片</text></view>
-			<view class="cell" @click="handleHistoryTargetClick">1<text>我的目标</text></view>
-			<view class="cell" @click="handleAddInfo">0<text>添加信息</text></view>
 		</view>
 		<!-- 其它 -->
 <!-- 		<button style="background: #333;position: absolute;bottom: 26.5%;color: skyblue;width: 100%;border-radius: 0%;">问题反馈</button -->>
@@ -59,12 +70,17 @@ export default {
 			store,
 			historyPlan: 0,
 			historyPicture: 0,
-			history: 0
+			history: 0,
+			icons: ["../../static/head/head1.jpg","../../static/head/head2.jpg","../../static/head/head3.jpg","../../static/head/head4.jpg","../../static/head/head5.jpg","../../static/head/head6.jpg","../../static/head/head7.jpg","../../static/head/head8.jpg","../../static/head/head9.jpg"],
+			selectedIcon: "../../static/head/head1.jpg",
+			currentIcon: 0,
+			showPopup: false
 		}
 	},
 	onLoad() {
 	const store = useCounterStore();
 	const userId = store.id;
+	this.selectedIcon = this.icons[this.store.headImg];
     // 请求 historyPlan 接口
     uni.request({
       url: `https://127.0.0.1:5000/user/historyPlan/${userId}`,
@@ -141,12 +157,81 @@ export default {
 		uni.navigateTo({
 		        url: '../login/login'
 		      });
-	}
+	},
+	changeIcon() {
+		console.log("头像被点击")
+	      this.showPopup = true; // 显示弹窗
+	    },
+	    switchIcon() {
+	      // 切换头像，循环遍历 icons 数组
+	      this.currentIcon = (this.currentIcon + 1) % this.icons.length;
+	    },
+	    confirmIcon() {
+	      // 确认选择头像，并应用到页面
+	      this.selectedIcon = this.icons[this.currentIcon];
+		  this.store.headImg = this.currentIcon;
+	      this.showPopup = false; // 关闭弹窗
+	    },
 }
 };
 </script>
 
 <style scoped lang="scss">
+	.popup_buttons button {
+	  padding: 5px 15px; /* 减少按钮的内边距 */
+	  background-color: #333;
+	  color: #fff;
+	  border-radius: 5px;
+	  font-size: 14px; /* 缩小文字大小 */
+	}
+	
+	.popup {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	}
+	
+	.popup_content {
+	  background-color: #111;
+	  border-radius: 10px;
+	  width: 80%;
+	  padding: 20px;
+	  text-align: center;
+	}
+	
+	.popup_avatar {
+	  width: 150px;
+	  height: 150px;
+	  margin: 0 auto;
+	  border-radius: 50%;
+	  overflow: hidden;
+	}
+	
+	.avatar_image {
+	  width: 100%;
+	  height: 100%;
+	  border-radius: 50%;
+	}
+	
+	.popup_buttons {
+	  margin-top: 20px;
+	  display: flex;
+	  justify-content: space-around;
+	}
+	
+	.popup_buttons button {
+	  padding: 10px 20px;
+	  background-color: #333;
+	  color: #fff;
+	  border-radius: 5px;
+	}
+	
 .custom-list-item {
 	background-color: #1f1f1f;
 	color: #cccccc;

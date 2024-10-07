@@ -5,7 +5,8 @@ const useCounterStore = common_vendor.defineStore("store", {
     return {
       count: 0,
       id: 0,
-      username: ""
+      username: "",
+      headImg: 1
     };
   },
   // 也可以这样定义
